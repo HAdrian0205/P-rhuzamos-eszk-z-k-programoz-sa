@@ -14,4 +14,4 @@ Integrálható függvények:
 
 A helyes eredmény ellenőrizhető:
 
-https://planetcalc.com/5494/ 
+www.emathhelp.net/en/calculators/calculus-2/simpsons-rule-calculator/
