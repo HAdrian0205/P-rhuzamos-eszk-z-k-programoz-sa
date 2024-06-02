@@ -7,7 +7,7 @@
 #include "time_utils.h"
 #include "input_utils.h"
 
-#define LOCAL_SIZE 64
+#define LOCAL_SIZE 128
 
 char* readKernelSource(const char* filename, size_t* length) {
     FILE* file = fopen(filename, "rb");
@@ -199,21 +199,21 @@ double run_algorithm(double a, double b, int size, int mode, int func, double* f
     clGetEventProfilingInfo(func_event, CL_PROFILING_COMMAND_START, sizeof(time_start), &time_start, NULL);
     clGetEventProfilingInfo(func_event, CL_PROFILING_COMMAND_END, sizeof(time_end), &time_end, NULL);
     nanoSeconds = time_end - time_start;
-    double func_time = nanoSeconds / 1000000.0;
+    double func_time = nanoSeconds / 1000000000.0;
 
     clGetEventProfilingInfo(integral_event, CL_PROFILING_COMMAND_START, sizeof(time_start), &time_start, NULL);
     clGetEventProfilingInfo(integral_event, CL_PROFILING_COMMAND_END, sizeof(time_end), &time_end, NULL);
     nanoSeconds = time_end - time_start;
-    double integral_time = nanoSeconds / 1000000.0;
+    double integral_time = nanoSeconds / 1000000000.0;
 
     clGetEventProfilingInfo(final_sum_event, CL_PROFILING_COMMAND_START, sizeof(time_start), &time_start, NULL);
     clGetEventProfilingInfo(final_sum_event, CL_PROFILING_COMMAND_END, sizeof(time_end), &time_end, NULL);
     nanoSeconds = time_end - time_start;
-    double final_sum_time = nanoSeconds / 1000000.0;
+    double final_sum_time = nanoSeconds / 1000000000.0;
 
-    /* printf("Function kernel execution time: %0.3f ms\n", func_time);
-    printf("Integral kernel execution time: %0.3f ms\n", integral_time);
-    printf("Final sum kernel execution time: %0.3f ms\n", final_sum_time); */
+    /* printf("Function kernel execution time: %0.10f s\n", func_time);
+    printf("Integral kernel execution time: %0.10f s\n", integral_time);
+    printf("Final sum kernel execution time: %0.10f s\n", final_sum_time); */
 
     double elapsed_time = func_time + integral_time + final_sum_time;
     *exact_value = exact_integral(a, b, func);
@@ -332,9 +332,9 @@ double run_simpson_nd(double *lower, double *upper, int *n, int dim, int func, d
     clGetEventProfilingInfo(simpson_event, CL_PROFILING_COMMAND_START, sizeof(time_start), &time_start, NULL);
     clGetEventProfilingInfo(simpson_event, CL_PROFILING_COMMAND_END, sizeof(time_end), &time_end, NULL);
     nanoSeconds = time_end - time_start;
-    double simpson_time = nanoSeconds / 1000000.0;
+    double simpson_time = nanoSeconds / 1000000000.0;
 
-    //printf("Simpson kernel execution time: %0.10f ms\n", simpson_time);
+    //printf("Simpson kernel execution time: %0.10f s\n", simpson_time);
 
     double elapsed_time = simpson_time;
 
